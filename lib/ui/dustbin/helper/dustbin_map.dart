@@ -1,4 +1,4 @@
-import 'package:dustbin_finder/framework/controller/dustbin_controller.dart';
+import 'package:dustbin_finder/framework/controller/dustbin_listing_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -11,7 +11,7 @@ class DustbinMap extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final controller = ref.watch(dustbinControllerProvider);
+    final controller = ref.watch(dustbinListingControllerProvider);
     final dustbins = controller.fetchDustbinsState.success?.result ?? [];
 
     final mapCenter = controller.position != null

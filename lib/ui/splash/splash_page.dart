@@ -1,4 +1,4 @@
-import 'package:dustbin_finder/framework/controller/dustbin_controller.dart';
+import 'package:dustbin_finder/framework/controller/dustbin_listing_controller.dart';
 import 'package:dustbin_finder/ui/dustbin/dustbin_home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -23,7 +23,7 @@ class _SplashPageState extends ConsumerState<SplashPage> {
 
   Future<void> _initializeApp() async {
     try {
-      final controller = ref.read(dustbinControllerProvider);
+      final controller = ref.read(dustbinListingControllerProvider);
       await controller.initialize();
     } catch (error, stackTrace) {
       debugPrint('App initialization failed: $error');

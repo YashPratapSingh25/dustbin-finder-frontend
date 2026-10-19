@@ -4,7 +4,6 @@ class Dustbin {
   final double latitude;
   final double longitude;
   final String address;
-  final String fillLevel;
   final List<String> photosKeys;
   final List<String> photoUrls;
   final int confidenceScore;
@@ -20,7 +19,6 @@ class Dustbin {
     required this.latitude,
     required this.longitude,
     required this.address,
-    required this.fillLevel,
     required this.photosKeys,
     required this.photoUrls,
     required this.confidenceScore,
@@ -38,7 +36,6 @@ class Dustbin {
       latitude: (json['latitude'] as num).toDouble(),
       longitude: (json['longitude'] as num).toDouble(),
       address: json['address'] as String? ?? '',
-      fillLevel: json['fill_level'] as String? ?? 'Unknown',
       photosKeys: List<String>.from(
         json['photos_keys'] as List<dynamic>? ?? [],
       ),

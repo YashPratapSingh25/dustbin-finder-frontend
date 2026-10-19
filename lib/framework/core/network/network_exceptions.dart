@@ -23,17 +23,38 @@ class NetworkExceptions implements Exception {
         case DioExceptionType.connectionError:
           return const NetworkExceptions('Connection error');
         case DioExceptionType.badResponse:
+          final data = error.response?.data;
+          String message = 'Server error';
+
+          if (data is Map) {
+            final detail = data['detail'] ?? data['message'] ?? data['error'];
+            
+            if (detail is String) {
+              message = detail;
+            } else if (detail is List) {
+              message = detail.map((err) {
+                if (err is Map) {
+                  final field = err['loc'] is List ? (err['loc'] as List).last.toString() : '';
+                  final msg = err['msg'] ?? '';
+                  return field.isNotEmpty ? '$field: $msg' : msg.toString();
+                }
+                return err.toString();
+              }).join(', ');
+            }
+          } else if (data is String && data.isNotEmpty) {
+            message = data;
+          } else {
+            message = error.response?.statusMessage ?? 'Server error';
+          }
+
           return NetworkExceptions(
-            error.response?.data is Map
-                ? (error.response?.data['message']?.toString() ?? 'Server error')
-                : (error.response?.statusMessage ?? 'Server error'),
+            message,
             statusCode: error.response?.statusCode,
             response: error.response,
           );
         case DioExceptionType.unknown:
           return NetworkExceptions(error.message ?? 'Unexpected error');
         case DioExceptionType.transformTimeout:
-          // TODO: Handle this case.
           throw UnimplementedError();
       }
     }

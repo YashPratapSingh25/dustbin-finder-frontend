@@ -33,11 +33,10 @@ class AddDustbinResult {
     final double? latitude;
     final double? longitude;
     final String? address;
-    final String? fillLevel;
     final String? id;
     final List<String>? photosKeys;
     final List<String>? photoUrls;
-    final int? confidenceScore;
+    final double? confidenceScore;
     final int? reportCount;
     final DateTime? lastVerifiedAt;
     final DateTime? createdAt;
@@ -48,7 +47,6 @@ class AddDustbinResult {
         this.latitude,
         this.longitude,
         this.address,
-        this.fillLevel,
         this.id,
         this.photosKeys,
         this.photoUrls,
@@ -64,7 +62,6 @@ class AddDustbinResult {
         latitude: json["latitude"]?.toDouble(),
         longitude: json["longitude"]?.toDouble(),
         address: json["address"],
-        fillLevel: json["fill_level"],
         id: json["id"],
         photosKeys: json["photos_keys"] == null ? [] : List<String>.from(json["photos_keys"]!.map((x) => x)),
         photoUrls: json["photo_urls"] == null ? [] : List<String>.from(json["photo_urls"]!.map((x) => x)),
@@ -80,7 +77,6 @@ class AddDustbinResult {
         "latitude": latitude,
         "longitude": longitude,
         "address": address,
-        "fill_level": fillLevel,
         "id": id,
         "photos_keys": photosKeys == null ? [] : List<dynamic>.from(photosKeys!.map((x) => x)),
         "photo_urls": photoUrls == null ? [] : List<dynamic>.from(photoUrls!.map((x) => x)),

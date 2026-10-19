@@ -10,7 +10,9 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 
-import 'package:dustbin_finder/framework/controller/dustbin_controller.dart'
+import 'package:dustbin_finder/framework/controller/add_dustbin_controller.dart'
+    as _i971;
+import 'package:dustbin_finder/framework/controller/dustbin_listing_controller.dart'
     as _i121;
 import 'package:dustbin_finder/framework/core/network/api_client.dart' as _i424;
 import 'package:dustbin_finder/framework/repository/dustbin/contract/dustbin_repository.dart'
@@ -34,8 +36,10 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i424.ApiClient>(() => _i424.ApiClient());
     gh.lazySingleton<_i241.DustbinRepository>(
         () => _i846.DustbinApiRepository(gh<_i424.ApiClient>()));
-    gh.factory<_i121.DustbinController>(
-        () => _i121.DustbinController(gh<_i241.DustbinRepository>()));
+    gh.factory<_i971.AddDustbinController>(
+        () => _i971.AddDustbinController(gh<_i241.DustbinRepository>()));
+    gh.factory<_i121.DustbinListingController>(
+        () => _i121.DustbinListingController(gh<_i241.DustbinRepository>()));
     return this;
   }
 }

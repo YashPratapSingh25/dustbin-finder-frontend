@@ -1,13 +1,9 @@
-import 'dart:io';
 import 'package:dustbin_finder/framework/core/di/injection.dart';
 import 'package:dustbin_finder/framework/repository/dustbin/contract/dustbin_repository.dart';
 import 'package:dustbin_finder/framework/repository/dustbin/model/dustbin_model.dart';
-import 'package:dustbin_finder/framework/repository/dustbin/model/request/add_dustbin_request_model.dart';
 import 'package:dustbin_finder/framework/repository/dustbin/model/request/nearby_dustbins_request_model.dart';
-import 'package:dustbin_finder/framework/repository/dustbin/model/response/add_dustbin_response_model.dart';
 import 'package:dustbin_finder/framework/repository/dustbin/model/response/nearby_dustbin_response_model.dart';
 import 'package:dustbin_finder/framework/utils/ui_state.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -16,13 +12,13 @@ import 'package:injectable/injectable.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-final dustbinControllerProvider = ChangeNotifierProvider<DustbinController>(
-  (ref) => getIt<DustbinController>(),
+final dustbinListingControllerProvider = ChangeNotifierProvider<DustbinListingController>(
+  (ref) => getIt<DustbinListingController>(),
 );
 
 @injectable
-class DustbinController extends ChangeNotifier {
-  DustbinController(this.dustbinRepository);
+class DustbinListingController extends ChangeNotifier {
+  DustbinListingController(this.dustbinRepository);
   final DustbinRepository dustbinRepository;
 
   Position? position;
@@ -39,7 +35,7 @@ class DustbinController extends ChangeNotifier {
     notifyListeners();
   }
 
-  void changeSelectedDustbinId(Dustbin? dustbin) {
+  void changeSelectedDustbin(Dustbin? dustbin) {
     selectedDustbin = dustbin;
     notifyListeners();
   }
@@ -90,9 +86,13 @@ class DustbinController extends ChangeNotifier {
 
 
   final fetchDustbinsState = UiState<NearbyDustbinsResponseModel>();
-  final addDustbinState = UiState<AddDustbinResponseModel>();
 
   Future<void> initialize() async {
+    fetchDustbinsState
+      ..isLoading = true
+      ..errorMessage = null
+      ..success = null;
+      
     notifyListeners();
     try {
       /// Location Permission
@@ -163,34 +163,6 @@ class DustbinController extends ChangeNotifier {
       fetchDustbinsState.errorMessage = error.toString();
     } finally {
       fetchDustbinsState.isLoading = false;
-      notifyListeners();
-    }
-  }
-
-  Future<void> addDustbin(
-      {required String name,
-      required String fillLevel,
-      required String address,
-      required double latitude,
-      required double longitude,
-      required List<File>? images}) async {
-    addDustbinState
-      ..isLoading = true
-      ..errorMessage = null
-      ..success = null;
-    notifyListeners();
-
-    try {
-      await dustbinRepository.addDustbin(AddDustbinRequestModel(
-          name: name,
-          fillLevel: fillLevel,
-          address: address,
-          latitude: latitude,
-          longitude: longitude,
-          images: images));
-      await fetchNearbyDustbins();
-    } finally {
-      addDustbinState.isLoading = false;
       notifyListeners();
     }
   }
