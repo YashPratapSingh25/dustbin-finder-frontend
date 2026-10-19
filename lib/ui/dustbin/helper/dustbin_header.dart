@@ -46,10 +46,9 @@ class DustbinHeaderBar extends ConsumerWidget {
               children: [
                 /// Brand mark: the recycle icon spins once on arrival
                 Container(
-                  width: 44,
-                  height: 44,
+                  width: 35,
+                  height: 35,
                   decoration: BoxDecoration(
-                    color: scheme.primary,
                     borderRadius: BorderRadius.circular(14),
                   ),
                   child: TweenAnimationBuilder<double>(
@@ -58,11 +57,7 @@ class DustbinHeaderBar extends ConsumerWidget {
                     curve: Curves.easeOutCubic,
                     builder: (_, v, child) =>
                         Transform.rotate(angle: v * 2 * math.pi, child: child),
-                    child: Icon(
-                      Icons.recycling_rounded,
-                      size: 26,
-                      color: scheme.onPrimary,
-                    ),
+                    child: Image.asset("assets/images/recycle-bin.png"),
                   ),
                 ),
                 const SizedBox(width: 12),

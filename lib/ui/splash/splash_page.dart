@@ -3,7 +3,6 @@ import 'package:dustbin_finder/ui/dustbin/dustbin_home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-
 class SplashPage extends ConsumerStatefulWidget {
   const SplashPage({super.key});
 
@@ -50,19 +49,10 @@ class _SplashPageState extends ConsumerState<SplashPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container(
-                height: 100,
-                width: 100,
-                decoration: BoxDecoration(
-                  color: Colors.green.withValues(alpha: 0.12),
-                  borderRadius: BorderRadius.circular(28),
-                ),
-                child: const Icon(
-                  Icons.recycling_rounded,
-                  size: 58,
-                  color: Colors.green,
-                ),
-              ),
+              SizedBox(
+                  height: 100,
+                  width: 100,
+                  child: Image.asset("assets/images/recycle-bin.png")),
               const SizedBox(height: 24),
               Text(
                 'Dustbin Finder',

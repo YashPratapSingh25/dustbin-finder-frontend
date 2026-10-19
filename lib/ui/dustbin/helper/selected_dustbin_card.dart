@@ -76,7 +76,7 @@ class SelectedDustbinCard extends ConsumerWidget {
                   Text(controller.selectedDustbin?.address ?? ""),
                   const SizedBox(height: 4),
                   Text(
-                    '${controller.selectedDustbin?.distanceInM.toStringAsFixed(0) ?? ''} m away',
+                    controller.selectedDustbin?.distanceInM.toStringAsFixed(0) != null ? '${controller.selectedDustbin?.distanceInM.toStringAsFixed(0)} m away' : '',
                   ),
                 ],
               ),
